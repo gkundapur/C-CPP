@@ -29,7 +29,6 @@ partition(int a[], int low, int high)
             print_array(a, high);
         }
     }
-
     //swap pivot=(a[low] and a[j]
     swap(&a[low], &a[j]); // swap a[j] and pivot
     //a[low] = a[j];
@@ -39,17 +38,36 @@ partition(int a[], int low, int high)
 
     return j;
 }
+
+int
+partition1(int a[], int low, int high)
+{
+    int pivot = a[low];
+    int i = low;
+
+    for (int j = low+1; j <= high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            swap(&a[i], &a[j]);
+        }
+    }
+    swap(&a[i], &a[low]);
+
+    return i;
+}
+
 void
 quicksort(int a[], int low, int high)
 {
     if (low < high) {
-        int pivot = partition(a, low, high);
+        //int pivotIdx = partition(a, low, high);
+        int pivotIdx = partition1(a, low, high);
 
-        printf("pivot= %d is at = %d\n\n", a[pivot], pivot);
+        printf("pivotIdx= %d is at = %d\n\n", a[pivotIdx], pivotIdx);
 
-        quicksort(a, low, pivot - 1);
+        quicksort(a, low, pivotIdx - 1);
 
-        quicksort(a, pivot + 1, high);
+        quicksort(a, pivotIdx + 1, high);
     }
 }
 
